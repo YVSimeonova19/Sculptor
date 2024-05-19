@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Sculptor.Common.Utilities;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sculptor.Common.Models.User;
 
@@ -23,4 +24,11 @@ public class UserIM
     [RegularExpression("^(?=.*[A-ZА-Яа-яa-z])([A-ZА-Я])([a-zа-я]{2,29})+(?<![_.])$", ErrorMessage = "Last name is not valid")]
     [Display(Name = "Last name")]
     public string LastName { get; set; } = string.Empty;
+
+    //?
+    [Required(ErrorMessage ="User role is required")]
+    [StringLength(1, ErrorMessage ="The {0} must be exactly {1} character long.", MinimumLength = 1)]
+    [RegularExpression("^(?=.*[0-2]{1})+(?<![_.])$")]
+    [Display(Name ="User role")]
+    public UserRoles Role = new UserRoles();
 }
