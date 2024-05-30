@@ -30,5 +30,5 @@ public class UserIM
     [StringLength(1, ErrorMessage ="The {0} must be exactly {1} character long.", MinimumLength = 1)]
     [RegularExpression("^(?=.*[0-2]{1})+(?<![_.])$")]
     [Display(Name ="User role")]
-    public UserRoles Role = new UserRoles();
+    public string Role { get; set; } = string.Empty;
 }
