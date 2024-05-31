@@ -33,6 +33,7 @@ public class SculptorDbContext : IdentityDbContext<User>
             .HasMany(e => e.Orders)
             .WithOne(e => e.Timetable)
             .HasForeignKey(e => e.TimetableId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         base.OnModelCreating(modelBuilder);

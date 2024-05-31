@@ -38,8 +38,9 @@ internal class OrderService : IOrderService
         // Get the order
         var order = await this.dbContext.Orders.FindAsync(id);
 
-        // TODO: Delete the order from the database
-        
+        // Delete the order from the database
+        if (order != null)
+            this.dbContext.Remove(order);
 
         await this.dbContext.SaveChangesAsync();
     }
