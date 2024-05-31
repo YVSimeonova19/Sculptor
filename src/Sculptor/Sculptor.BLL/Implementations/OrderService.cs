@@ -33,6 +33,7 @@ internal class OrderService : IOrderService
         await this.dbContext.SaveChangesAsync();
     }
 
+    // Delete an order asyncronously
     public async Task DeleteOrderAsync(int id)
     {
         // Get the order
@@ -60,11 +61,13 @@ internal class OrderService : IOrderService
         var order = await this.dbContext.Orders.FindAsync(id);
 
         // Update status if changed
-        if (orderUM.IsDelivered != null)
+        if (orderUM.IsDelivered != null && order != null)
+        {
             order.IsDelivered = (bool)orderUM.IsDelivered;
 
-        this.dbContext.Orders.Update(order);
-        await this.dbContext.SaveChangesAsync();
+            this.dbContext.Orders.Update(order);
+            await this.dbContext.SaveChangesAsync();
+        }
 
         return this.mapper.Map<OrderVM>(order);
     }

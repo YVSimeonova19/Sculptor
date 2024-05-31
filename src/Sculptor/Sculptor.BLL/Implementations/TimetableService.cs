@@ -1,6 +1,8 @@
-﻿namespace Sculptor.BLL.Implementations;
+﻿using Sculptor.BLL.Contracts;
 
-internal class TimetableService
+namespace Sculptor.BLL.Implementations;
+
+internal class TimetableService : ITimetableService
 {
 
 }
