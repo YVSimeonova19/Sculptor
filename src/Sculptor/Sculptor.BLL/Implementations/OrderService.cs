@@ -45,6 +45,15 @@ internal class OrderService : IOrderService
         await this.dbContext.SaveChangesAsync();
     }
 
+    // Get the information of an order by its id asyncronously
+    public async Task<OrderVM> GetOrderInfoByIdAsync(int orderId)
+    {
+        return await dbContext.Orders
+            .Where(o => o.Id == orderId)
+            .ProjectTo<OrderVM>(this.mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<OrderVM> UpdateOrderAsync(int id, OrderUM orderUM)
     {
         // Get the order

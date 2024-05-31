@@ -7,6 +7,9 @@ public interface IOrderService
     // Add a new order to the DB asyncronously
     Task CreateOrderAsync(OrderIM orderIM);
 
+    // Get the information of an order by its id asyncronously
+    Task<OrderVM> GetOrderInfoByIdAsync(int orderId);
+
     // Update an orders information asyncronously
     Task<OrderVM> UpdateOrderAsync(int id, OrderUM orderUM);
 
