@@ -51,7 +51,7 @@ internal class OrderService : IOrderService
 
         // Update status if changed
         if (orderUM.IsDelivered != null)
-            order.IsDelivered = orderUM.IsDelivered;
+            order.IsDelivered = (bool)orderUM.IsDelivered;
 
         this.dbContext.Orders.Update(order);
         await this.dbContext.SaveChangesAsync();

@@ -2,5 +2,5 @@
 
 public class OrderUM
 {
-    public bool IsDelivered { get; set; }
+    public bool? IsDelivered { get; set; }
 }
