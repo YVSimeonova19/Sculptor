@@ -1,12 +1,15 @@
-﻿namespace Sculptor.BLL.Contracts;
+﻿using Sculptor.Common.Models.Timetable;
+
+namespace Sculptor.BLL.Contracts;
 
 public interface ITimetableService
 {
-    // TODO: view schedule
+    // Return schedule information asyncronously
+    Task<TimetableVM> ViewDailyTimetableAsync();
 
+    // Add a new item to the schedule asyncronously
+    Task AddNewItemAsync();
 
-    // TODO: add item to schedule
-
-
-    // TODO: edit schedule
+    // Update the schedule asyncronously
+    Task<TimetableVM> EditTimetableAsync();
 }
