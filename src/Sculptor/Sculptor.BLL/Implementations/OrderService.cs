@@ -33,6 +33,12 @@ internal class OrderService : IOrderService
         await this.dbContext.SaveChangesAsync();
     }
 
+    // Check if an order exists by its id
+    public bool CheckIfOrderExistsById(int id)
+    {
+        return this.dbContext.Orders.Where(o => o.Id == id).Count() != 0;
+    }
+
     // Delete an order asyncronously
     public async Task DeleteOrderAsync(int id)
     {

@@ -15,4 +15,7 @@ public interface IOrderService
 
     // Delete an order asyncronously
     Task DeleteOrderAsync(int id);
+
+    // Check if an order exists by its id
+    Task<bool> CheckIfOrderExistsById(int id);
 }

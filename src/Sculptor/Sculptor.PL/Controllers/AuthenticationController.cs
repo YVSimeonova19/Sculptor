@@ -5,7 +5,7 @@ using Sculptor.Common.Models.Login;
 using Sculptor.Common.Models.User;
 using Sculptor.Common.Utilities;
 
-namespace Transcend.PL.Controllers;
+namespace Sculptor.PL.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
