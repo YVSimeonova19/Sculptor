@@ -15,6 +15,7 @@ public class SculptorDbContext : IdentityDbContext<User>
     public DbSet<Order> Orders { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Timetable> Timetables { get; set; }
+    public DbSet<ClientInfo> ClientInfo { get; set; }
 
     // Set table relationships before being created
     protected override void OnModelCreating(ModelBuilder modelBuilder)

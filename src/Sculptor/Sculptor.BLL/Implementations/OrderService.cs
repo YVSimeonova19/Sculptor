@@ -39,9 +39,17 @@ internal class OrderService : IOrderService
         // Get the order
         var order = await this.dbContext.Orders.FindAsync(id);
 
+        // Get client information
+        var clientInfo = await this.dbContext.ClientInfo
+            .Where(ci => ci.Id == order.ClientInfo.Id)
+            .FirstAsync();
+
         // Delete the order from the database
         if (order != null)
+        {
+            this.dbContext.Remove(clientInfo);
             this.dbContext.Remove(order);
+        }
 
         await this.dbContext.SaveChangesAsync();
     }
