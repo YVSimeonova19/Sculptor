@@ -10,7 +10,7 @@ public class Timetable
     public int Id { get; set; }
 
     [Required]
-    public DateTime DateTime { get; set; }
+    public DateTime DeliveryDateTime { get; set; }
 
     [Required]
     public ICollection<Order> Orders { get; } = new List<Order>();

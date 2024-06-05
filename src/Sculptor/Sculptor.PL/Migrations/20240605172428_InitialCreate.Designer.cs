@@ -12,8 +12,8 @@ using Sculptor.DAL.Data;
 namespace Sculptor.PL.Migrations
 {
     [DbContext(typeof(SculptorDbContext))]
-    [Migration("20240517152556_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240605172428_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace Sculptor.PL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Sculptor.DAL.Models.Order", b =>
+            modelBuilder.Entity("Sculptor.DAL.Models.ClientInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -190,6 +190,25 @@ namespace Sculptor.PL.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("ClientInfo");
+                });
+
+            modelBuilder.Entity("Sculptor.DAL.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsDelivered")
                         .HasColumnType("bit");
@@ -240,7 +259,7 @@ namespace Sculptor.PL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("DeliveryDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -266,6 +285,16 @@ namespace Sculptor.PL.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -364,6 +393,17 @@ namespace Sculptor.PL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sculptor.DAL.Models.ClientInfo", b =>
+                {
+                    b.HasOne("Sculptor.DAL.Models.Order", "Order")
+                        .WithOne("ClientInfo")
+                        .HasForeignKey("Sculptor.DAL.Models.ClientInfo", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Sculptor.DAL.Models.Order", b =>
                 {
                     b.HasOne("Sculptor.DAL.Models.Timetable", "Timetable")
@@ -388,6 +428,9 @@ namespace Sculptor.PL.Migrations
 
             modelBuilder.Entity("Sculptor.DAL.Models.Order", b =>
                 {
+                    b.Navigation("ClientInfo")
+                        .IsRequired();
+
                     b.Navigation("Products");
                 });
 

@@ -36,6 +36,15 @@ public class SculptorDbContext : IdentityDbContext<User>
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        // Create relationship between Orders and UserInfo
+        modelBuilder
+            .Entity<Order>()
+            .HasOne(e => e.ClientInfo)
+            .WithOne(e => e.Order)
+            .HasForeignKey<ClientInfo>(e => e.OrderId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         base.OnModelCreating(modelBuilder);
     }
 }

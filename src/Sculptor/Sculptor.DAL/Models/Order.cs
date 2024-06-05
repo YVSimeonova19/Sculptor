@@ -13,26 +13,6 @@ public class Order
     public bool IsDelivered { get; set; }
 
     [Required]
-    [MaxLength(50)]
-    public string ClientFirstName { get; set; } = string.Empty;
-
-    [Required]
-    [MaxLength(50)]
-    public string ClientLastName { get; set; } = string.Empty;
-
-    [Required]
-    [MaxLength(50)]
-    public string ClientEmail { get; set; } = string.Empty;
-
-    [Required]
-    [MaxLength(50)]
-    public string ClientAddress { get; set; } = string.Empty;
-
-    [Required]
-    [MaxLength(50)]
-    public string ClientArea { get; set; } = string.Empty;
-
-    [Required]
     public ICollection<Product> Products { get; } = new List<Product>();
 
     [Required]
@@ -40,4 +20,7 @@ public class Order
 
     [Required]
     public Timetable Timetable { get; set; } = null!;
+
+    [Required]
+    public ClientInfo? ClientInfo { get; set; }
 }

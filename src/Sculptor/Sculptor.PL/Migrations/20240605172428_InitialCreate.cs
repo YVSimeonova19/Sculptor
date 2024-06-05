@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sculptor.PL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,8 @@ namespace Sculptor.PL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -56,7 +58,7 @@ namespace Sculptor.PL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DeliveryDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,11 +178,6 @@ namespace Sculptor.PL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsDelivered = table.Column<bool>(type: "bit", nullable: false),
-                    ClientFirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClientLastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClientEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClientAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClientArea = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TimetableId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -190,6 +187,30 @@ namespace Sculptor.PL.Migrations
                         name: "FK_Orders_Timetables_TimetableId",
                         column: x => x.TimetableId,
                         principalTable: "Timetables",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClientInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientFirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ClientLastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ClientEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ClientAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ClientArea = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientInfo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClientInfo_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -255,6 +276,12 @@ namespace Sculptor.PL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientInfo_OrderId",
+                table: "ClientInfo",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_TimetableId",
                 table: "Orders",
                 column: "TimetableId");
@@ -282,6 +309,9 @@ namespace Sculptor.PL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ClientInfo");
 
             migrationBuilder.DropTable(
                 name: "Products");
