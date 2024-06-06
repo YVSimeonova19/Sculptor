@@ -4,6 +4,9 @@
 
 <img align="right" alt="logo" src="#">
 
+<img alt="GitHub milestone details" src="https://img.shields.io/github/milestones/issues-total/codingburgas/2324-pp-11v-1-YVSimeonova19?style=for-the-badge">
+
+
 ## Project resume 📑
 This is a Web Application API for a **delivery scheduling system** with 3 different types of users - *Admin*, *Retailer* and *Deliverer*.
 
@@ -20,6 +23,11 @@ A deliverer gets their schedule every day as a table, where they can check order
 
 <br/>
 <br/>
+
+## Documents 📄
+- <a href="#">Documentation</a>
+- <a href="#">UML Diagrams</a>
+- <a href="#">Presentation</a>
 
 ## The project has been deployed in Azure. You can find it [HERE][ProjectLink] 💻
 
