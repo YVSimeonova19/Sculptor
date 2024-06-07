@@ -30,6 +30,14 @@ internal class UserService : IUserService
             .FirstOrDefaultAsync());
     }
 
+    // TODO: Fix this async sdkhjsdf;hjladf;hjlsahjkl
+    public async Task<UserVM> GetUserByUsernameAsync(string username)
+    {
+        return this.mapper.Map<UserVM>(userManager.Users
+            .Where(usr => usr.UserName == username)
+            .FirstOrDefault());
+    }
+
     // Update the current users information in the DB asyncronously
     public async Task<UserVM> UpdateUserAsync(string id, UserUM userUM)
     {
