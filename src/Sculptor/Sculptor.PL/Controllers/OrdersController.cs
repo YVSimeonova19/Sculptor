@@ -11,13 +11,11 @@ namespace Sculptor.PL.Controllers;
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService orderService;
-    private readonly ICurrentUser currentUser;
 
     // Add dependency injections
     public OrdersController(IOrderService orderService, ICurrentUser currentUser)
     {
         this.orderService = orderService;
-        this.currentUser = currentUser;
     }
 
     // Place an order asyncronously (Only available for retailers and admins)
