@@ -25,25 +25,21 @@ namespace Sculptor.PL.Controllers
 
         // Update user by username asynchronously
 
-        // TODO: Make a method to check the user by username in IAuthenticationService
-
         [HttpPatch("{username}")]
         public async Task<ActionResult<UserVM>> EditUser([FromBody] UserUM userUM, string username)
         {
-            var user = userService.GetUserByUsernameAsync(username);
             if (!await this.authenticationService.CheckIfUserExistsAsync(username))
                 return NotFound();
 
-            return await userService.UpdateUserAsync(user.Id, userUM);
+            return await userService.UpdateUserAsync(username, userUM);
         }
 
-        // TODO: Implement DeleteUserByUsername
-
         // Delete user by username asynchronously
-        //[HttpDelete("{username}")]
-        //public async Task DeleteUser(string username)
-        //{
-        //    await this.userService.DeleteUserAsync(username);
-        //}
+
+        [HttpDelete("{username}")]
+        public async Task DeleteUser(string username)
+        {
+            await this.userService.DeleteUserAsync(username);
+        }
     }
 }

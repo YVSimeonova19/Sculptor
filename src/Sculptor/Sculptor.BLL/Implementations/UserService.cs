@@ -30,20 +30,20 @@ internal class UserService : IUserService
             .FirstOrDefaultAsync());
     }
 
-    // TODO: Fix this async sdkhjsdf;hjladf;hjlsahjkl
+    // Retrieve a user from the DB by username asyncronously
     public async Task<UserVM> GetUserByUsernameAsync(string username)
     {
-        return this.mapper.Map<UserVM>(userManager.Users
+        return this.mapper.Map<UserVM>(await userManager.Users
             .Where(usr => usr.UserName == username)
-            .FirstOrDefault());
+            .FirstOrDefaultAsync());
     }
 
     // Update the current users information in the DB asyncronously
-    public async Task<UserVM> UpdateUserAsync(string id, UserUM userUM)
+    public async Task<UserVM> UpdateUserAsync(string username, UserUM userUM)
     {
         // Retrieve the user data from the DB
         var user = await userManager.Users
-            .Where(usr => usr.Id == id)
+            .Where(usr => usr.UserName == username)
             .FirstAsync();
 
         //Check if the username is changed and apply the changes
@@ -72,12 +72,12 @@ internal class UserService : IUserService
         return this.mapper.Map<UserVM>(user);
     }
 
-    // Delete a user by id asyncronously
-    public async Task DeleteUserAsync(string id)
+    // Delete a user by username asyncronously
+    public async Task DeleteUserAsync(string username)
     {
         // Retrieve the user
         var user = await userManager.Users
-            .Where(usr => usr.Id == id)
+            .Where(usr => usr.UserName == username)
             .FirstAsync();
 
         if (user == null) return;
