@@ -25,23 +25,14 @@ internal class TimetableService : ITimetableService
     public async Task AddNewItemAsync(Order order)
     {
         // TODO
+        throw new NotImplementedException();
     }
 
     // Update the schedule asyncronously
     public async Task<TimetableVM> EditTimetableAsync(int orderId, OrderUM orderUM)
     {
-        //Retrieve the orde from the DB
-        var order = await dbContext.Orders
-            .Where(o => o.Id == orderId)
-            .FirstAsync();
-
-        // Update the order status
-        if (orderUM.IsDelivered != null)
-            order.IsDelivered = (bool)orderUM.IsDelivered;
-
-        await this.dbContext.SaveChangesAsync();
-
-        return this.mapper.Map<TimetableVM>(order);
+        // TODO
+        throw new NotImplementedException();
     }
 
     // Return schedule information asyncronously
