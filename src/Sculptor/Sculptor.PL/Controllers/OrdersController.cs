@@ -13,7 +13,7 @@ public class OrdersController : ControllerBase
     private readonly IOrderService orderService;
 
     // Add dependency injections
-    public OrdersController(IOrderService orderService, ICurrentUser currentUser)
+    public OrdersController(IOrderService orderService)
     {
         this.orderService = orderService;
     }
