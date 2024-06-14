@@ -46,11 +46,11 @@ public class SculptorDbContext : IdentityDbContext<User>
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-        // TODO: Make UserName unique
-        //modelBuilder
-        //    .Entity<User>()
-        //    .HasIndex(u => u.UserName)
-        //    .IsUnique(true);
+        // Make UserName unique
+        modelBuilder
+            .Entity<User>()
+            .HasIndex(u => u.UserName)
+            .IsUnique();
 
         base.OnModelCreating(modelBuilder);
     }

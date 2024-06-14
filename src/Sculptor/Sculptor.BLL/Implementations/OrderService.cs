@@ -85,4 +85,9 @@ internal class OrderService : IOrderService
 
         return this.mapper.Map<OrderVM>(order);
     }
+
+    Task<bool> IOrderService.CheckIfOrderExistsById(int id)
+    {
+        throw new NotImplementedException();
+    }
 }
