@@ -24,8 +24,7 @@ internal class TimetableService : ITimetableService
     // Add a new item to the schedule asyncronously
     public async Task AddNewItemAsync(Order order)
     {
-        dbContext.Orders.Add(order);
-        await dbContext.SaveChangesAsync();
+        // TODO
     }
 
     // Update the schedule asyncronously
