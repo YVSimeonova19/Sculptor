@@ -2,8 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Sculptor.BLL.Contracts;
+using Sculptor.Common.Models.Order;
 using Sculptor.Common.Models.Timetable;
 using Sculptor.DAL.Data;
+using Sculptor.DAL.Models;
 
 namespace Sculptor.BLL.Implementations;
 
@@ -20,20 +22,40 @@ internal class TimetableService : ITimetableService
     }
 
     // Add a new item to the schedule asyncronously
-    public Task AddNewItemAsync()
+    public async Task AddNewItemAsync(Order order)
     {
-        throw new NotImplementedException();
+        dbContext.Orders.Add(order);
+        await dbContext.SaveChangesAsync();
     }
 
     // Update the schedule asyncronously
-    public Task<TimetableVM> EditTimetableAsync()
+    public async Task<TimetableVM> EditTimetableAsync(int orderId, OrderUM orderUM)
     {
-        throw new NotImplementedException();
+        //Retrieve the orde from the DB
+        var order = await dbContext.Orders
+            .Where(o => o.Id == orderId)
+            .FirstAsync();
+
+        // Update the order status
+        if (orderUM.IsDelivered != null)
+            order.IsDelivered = (bool)orderUM.IsDelivered;
+
+        await this.dbContext.SaveChangesAsync();
+
+        return this.mapper.Map<TimetableVM>(order);
     }
 
     // Return schedule information asyncronously
-    public Task<TimetableVM> ViewDailyTimetableAsync()
+    public async Task<TimetableVM> ViewDailyTimetableAsync()
     {
-        throw new NotImplementedException();
+        var orders = await dbContext.Orders
+            .Where(o => o.IsDelivered != true)
+            .OrderBy(o => o.ClientInfo.ClientArea)
+            .ThenBy(o => o.PlacedAt)
+            .Take(40)
+            .ProjectTo<OrderVM>(mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return new TimetableVM { Orders = orders };
     }
 }

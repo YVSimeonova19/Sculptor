@@ -27,6 +27,8 @@ internal class OrderService : IOrderService
         // Create a new order
         var order = this.mapper.Map<Order>(orderIM);
 
+        order.PlacedAt = DateTime.Now;
+
         // Add the order to the orders dbSet
         this.dbContext.Orders.Add(order);
 

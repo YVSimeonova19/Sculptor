@@ -13,6 +13,9 @@ public class Order
     public bool IsDelivered { get; set; }
 
     [Required]
+    public DateTime PlacedAt { get; set; }
+
+    [Required]
     public ICollection<Product> Products { get; } = new List<Product>();
 
     [Required]

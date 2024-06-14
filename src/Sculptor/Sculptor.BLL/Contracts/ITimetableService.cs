@@ -1,4 +1,6 @@
-﻿using Sculptor.Common.Models.Timetable;
+﻿using Sculptor.Common.Models.Order;
+using Sculptor.Common.Models.Timetable;
+using Sculptor.DAL.Models;
 
 namespace Sculptor.BLL.Contracts;
 
@@ -8,8 +10,8 @@ public interface ITimetableService
     Task<TimetableVM> ViewDailyTimetableAsync();
 
     // Add a new item to the schedule asyncronously
-    Task AddNewItemAsync();
+    Task AddNewItemAsync(Order order);
 
     // Update the schedule asyncronously
-    Task<TimetableVM> EditTimetableAsync();
+    Task<TimetableVM> EditTimetableAsync(int orderId, OrderUM orderUM);
 }
