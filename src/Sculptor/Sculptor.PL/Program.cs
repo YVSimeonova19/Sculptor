@@ -115,6 +115,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    // TODO: FIX EXCEPTION!1!1!1!
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
