@@ -15,4 +15,7 @@ public interface IUserService
 
     // Delete a user by id asyncronously
     Task DeleteUserAsync(string username);
+
+    // Get all users from the DB asynchronously
+    Task<List<UserVM>> GetAllUsersAsync();
 }

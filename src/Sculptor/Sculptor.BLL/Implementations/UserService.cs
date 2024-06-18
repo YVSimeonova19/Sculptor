@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Sculptor.BLL.Contracts;
@@ -85,5 +86,14 @@ internal class UserService : IUserService
         await userManager.DeleteAsync(user);
 
         await dbContext.SaveChangesAsync();
+    }
+
+    // Get all users from the DB asynchronously
+    public async Task<List<UserVM>> GetAllUsersAsync()
+    {
+        return await this.userManager.Users
+            .Where(u => u.UserName != null)
+            .ProjectTo<UserVM>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }
