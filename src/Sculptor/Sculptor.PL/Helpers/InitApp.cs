@@ -11,7 +11,6 @@ public static class InitApp
         using var scope = app.Services.CreateScope();
 
         var authenticationService = scope.ServiceProvider.GetRequiredService<IAuthenticationService>();
-        // TODO:asdasdasadsd
         var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
 
         // Check if there are users in the DB
