@@ -2,5 +2,5 @@
 
 public class TimetableUM
 {
-    public DateTime? DateTime { get; set; }
+    public DateTime? DeliveryDateTime { get; set; }
 }

@@ -9,11 +9,13 @@ namespace Sculptor.PL.Controllers;
 public class TimetablesController : ControllerBase
 {
     private readonly ITimetableService timetableService;
+    private readonly IOrderService orderService;
 
     // Add depndency injecions
-    public TimetablesController(ITimetableService timetableService)
+    public TimetablesController(ITimetableService timetableService, IOrderService orderService)
     {
         this.timetableService = timetableService;
+        this.orderService = orderService;
     }
 
     // Return schedue information asyncronously
@@ -24,5 +26,13 @@ public class TimetablesController : ControllerBase
         return await timetableService.ViewDailyTimetableAsync();
     }
 
+    [HttpPatch("{orderId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<TimetableVM>> EditTimetable([FromBody] TimetableUM timetableUM, int orderId)
+    {
+        if (!await this.orderService.CheckIfOrderExistsById(orderId))
+            return NotFound();
 
+        return await timetableService.EditTimetableAsync(orderId, timetableUM);
+    }
 }

@@ -13,5 +13,5 @@ public interface ITimetableService
     Task AddNewItemAsync(Order order);
 
     // Update the schedule asyncronously
-    Task<TimetableVM> EditTimetableAsync(int orderId, OrderUM orderUM);
+    Task<TimetableVM> EditTimetableAsync(int orderId, TimetableUM timetableUM);
 }
