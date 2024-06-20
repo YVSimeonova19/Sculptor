@@ -26,7 +26,7 @@ public static class InitApp
                 Password = "admin",
                 FirstName = "Dimitar",
                 LastName = "Yonchev",
-                Role = "2"
+                Role = "Admin"
             },
             new UserIM
             {
@@ -34,7 +34,7 @@ public static class InitApp
                 Password = "deliverer",
                 FirstName = "Yordan",
                 LastName = "Kolev",
-                Role = "1"
+                Role = "Deliverer"
             },
             new UserIM
             {
@@ -42,12 +42,12 @@ public static class InitApp
                 Password = "retailer",
                 FirstName = "Ivana",
                 LastName = "Novkova",
-                Role = "0"
+                Role = "Retailer"
             }
         };
 
         // Add the users to the DB
-        foreach (var user in users)
+        foreach(var user in users)
         {
             await authenticationService.CreateUserAsync(user);
         }
