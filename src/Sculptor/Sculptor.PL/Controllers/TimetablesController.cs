@@ -26,6 +26,7 @@ public class TimetablesController : ControllerBase
         return await timetableService.ViewDailyTimetableAsync();
     }
 
+    // Edit order delivery datetime asyncronously
     [HttpPatch("{orderId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<TimetableVM>> EditTimetable([FromBody] TimetableUM timetableUM, int orderId)
