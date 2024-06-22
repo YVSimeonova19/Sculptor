@@ -28,7 +28,7 @@ public class UserIM
     //?
     [Required(ErrorMessage ="User role is required")]
     [StringLength(1, ErrorMessage ="The {0} must be exactly {1} character long.", MinimumLength = 1)]
-    [RegularExpression("^(?=.*[0-2]{1})+(?<![_.])$")]
+    [RegularExpression("^(0|1|2)$")]
     [Display(Name ="User role")]
     public string Role { get; set; } = string.Empty;
 }

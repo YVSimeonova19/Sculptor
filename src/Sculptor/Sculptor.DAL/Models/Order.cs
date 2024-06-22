@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sculptor.DAL.Models;
 
@@ -16,14 +17,14 @@ public class Order
     public DateTime PlacedAt { get; set; }
 
     [Required]
-    public ICollection<Product> Products { get; } = new List<Product>();
+    public List<Product> Products { get; set; }
+
+    [AllowNull]
+    public int? TimetableId { get; set; }
+
+    [AllowNull]
+    public Timetable? Timetable { get; set; } = null!;
 
     [Required]
-    public int TimetableId { get; set; }
-
-    [Required]
-    public Timetable Timetable { get; set; } = null!;
-
-    [Required]
-    public ClientInfo? ClientInfo { get; set; }
+    public ClientInfo ClientInfo { get; set; }
 }

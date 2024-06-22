@@ -16,26 +16,18 @@ public class SculptorDbContext : IdentityDbContext<User>
     public DbSet<Product> Products { get; set; }
     public DbSet<Timetable> Timetables { get; set; }
     public DbSet<ClientInfo> ClientInfo { get; set; }
+    public DbSet<ProductOrder> ProductsOrders { get; set; }
 
     // Set table relationships before being created
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Create relationship between Orders and Products
-        modelBuilder
-            .Entity<Order>()
-            .HasMany(e => e.Products)
-            .WithOne(e => e.Order)
-            .HasForeignKey(e => e.OrderId)
-            .IsRequired();
-
         // Create relationship between Timetables and Orders
         modelBuilder
             .Entity<Timetable>()
             .HasMany(e => e.Orders)
             .WithOne(e => e.Timetable)
             .HasForeignKey(e => e.TimetableId)
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Create relationship between Orders and UserInfo
         modelBuilder
@@ -51,6 +43,23 @@ public class SculptorDbContext : IdentityDbContext<User>
             .Entity<User>()
             .HasIndex(u => u.UserName)
             .IsUnique();
+
+        // Set bridge table
+        modelBuilder.Entity<ProductOrder>()
+            .HasKey(x => new { x.ProductId, x.OrderId });
+
+        // Create relationship between Products and Orders
+        modelBuilder.Entity<ProductOrder>()
+            .HasOne(po => po.Order)
+            .WithMany()
+            .HasForeignKey(o => o.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ProductOrder>()
+            .HasOne(po => po.Product)
+            .WithMany()
+            .HasForeignKey(p => p.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         base.OnModelCreating(modelBuilder);
     }

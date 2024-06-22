@@ -33,6 +33,20 @@ internal class OrderService : IOrderService
         this.dbContext.Orders.Add(order);
 
         await this.dbContext.SaveChangesAsync();
+
+        var orderId = this.dbContext.Orders.Where(o => o.PlacedAt == order.PlacedAt).First().Id;
+
+        foreach(var productId in orderIM.ProductsIds)
+        {
+            var productOrder = new ProductOrder() { 
+                ProductId = productId,
+                OrderId = orderId
+            };
+
+            await this.dbContext.AddAsync(productOrder);
+        }
+
+        await this.dbContext.SaveChangesAsync();
     }
 
     // Check if an order exists by its id
@@ -47,15 +61,9 @@ internal class OrderService : IOrderService
         // Get the order
         var order = await this.dbContext.Orders.FindAsync(id);
 
-        // Get client information
-        var clientInfo = await this.dbContext.ClientInfo
-            .Where(ci => ci.Id == order.ClientInfo.Id)
-            .FirstAsync();
-
         // Delete the order from the database
         if (order != null)
         {
-            this.dbContext.Remove(clientInfo);
             this.dbContext.Remove(order);
         }
 
@@ -86,10 +94,5 @@ internal class OrderService : IOrderService
         }
 
         return this.mapper.Map<OrderVM>(order);
-    }
-
-    Task<bool> IOrderService.CheckIfOrderExistsById(int id)
-    {
-        throw new NotImplementedException();
     }
 }

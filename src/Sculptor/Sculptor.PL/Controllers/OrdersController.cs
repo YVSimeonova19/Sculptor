@@ -11,11 +11,13 @@ namespace Sculptor.PL.Controllers;
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService orderService;
+    private readonly IProductService productService;
 
     // Add dependency injections
-    public OrdersController(IOrderService orderService)
+    public OrdersController(IOrderService orderService, IProductService productService)
     {
         this.orderService = orderService;
+        this.productService = productService;
     }
 
     // Place an order asyncronously (Only available for retailers and admins)
@@ -23,6 +25,16 @@ public class OrdersController : ControllerBase
     [Authorize(Roles = "Retailer,Admin")]
     public async Task<ActionResult<Response>> PlaceOrderAsync([FromBody] OrderIM orderIM)
     {
+        foreach(var productId in orderIM.ProductsIds)
+        {
+            var product = await this.productService.GetProductByIdAsync(productId);
+
+            if(product is null)
+            {
+                return BadRequest();
+            }
+        }
+
         // Create the order
         await orderService.CreateOrderAsync(orderIM);
 
@@ -40,7 +52,7 @@ public class OrdersController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Response>> DeleteOrderAsync(int id)
     {
-        if (!await orderService.CheckIfOrderExistsById(id))
+        if (!orderService.CheckIfOrderExistsById(id))
             return NotFound();
 
         // Delete the order

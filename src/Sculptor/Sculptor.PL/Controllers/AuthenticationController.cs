@@ -4,6 +4,7 @@ using Sculptor.BLL.Contracts;
 using Sculptor.Common.Models.Login;
 using Sculptor.Common.Models.User;
 using Sculptor.Common.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sculptor.PL.Controllers;
 
@@ -23,6 +24,7 @@ public class AuthController : ControllerBase
 
     // Create a user register asyncronously
     [HttpPost("Register")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Response>> RegisterUserAsync([FromBody] UserIM userIM)
     {
         // Check if the user already exists

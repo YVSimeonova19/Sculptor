@@ -12,8 +12,8 @@ using Sculptor.DAL.Data;
 namespace Sculptor.PL.Migrations
 {
     [DbContext(typeof(SculptorDbContext))]
-    [Migration("20240605172428_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240622191629_Update timetable")]
+    partial class Updatetimetable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,21 @@ namespace Sculptor.PL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderProduct");
+                });
+
             modelBuilder.Entity("Sculptor.DAL.Models.ClientInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -213,7 +228,10 @@ namespace Sculptor.PL.Migrations
                     b.Property<bool>("IsDelivered")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TimetableId")
+                    b.Property<DateTime>("PlacedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TimetableId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -241,14 +259,24 @@ namespace Sculptor.PL.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Sculptor.DAL.Models.ProductOrder", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Products");
+                    b.ToTable("ProductsOrders");
                 });
 
             modelBuilder.Entity("Sculptor.DAL.Models.Timetable", b =>
@@ -339,6 +367,10 @@ namespace Sculptor.PL.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("UserName")
+                        .IsUnique()
+                        .HasFilter("[UserName] IS NOT NULL");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -393,6 +425,21 @@ namespace Sculptor.PL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("Sculptor.DAL.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sculptor.DAL.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Sculptor.DAL.Models.ClientInfo", b =>
                 {
                     b.HasOne("Sculptor.DAL.Models.Order", "Order")
@@ -409,29 +456,34 @@ namespace Sculptor.PL.Migrations
                     b.HasOne("Sculptor.DAL.Models.Timetable", "Timetable")
                         .WithMany("Orders")
                         .HasForeignKey("TimetableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Timetable");
                 });
 
-            modelBuilder.Entity("Sculptor.DAL.Models.Product", b =>
+            modelBuilder.Entity("Sculptor.DAL.Models.ProductOrder", b =>
                 {
                     b.HasOne("Sculptor.DAL.Models.Order", "Order")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Sculptor.DAL.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Sculptor.DAL.Models.Order", b =>
                 {
                     b.Navigation("ClientInfo")
                         .IsRequired();
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Sculptor.DAL.Models.Timetable", b =>

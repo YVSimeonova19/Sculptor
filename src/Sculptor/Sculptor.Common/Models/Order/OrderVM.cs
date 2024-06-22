@@ -1,4 +1,6 @@
-﻿namespace Sculptor.Common.Models.Order;
+﻿using Sculptor.Common.Models.Product;
+
+namespace Sculptor.Common.Models.Order;
 
 public class OrderVM
 {
@@ -16,6 +18,5 @@ public class OrderVM
 
     public string ClientArea { get; set; } = string.Empty;
 
-    //?
-    public List<OrderVM> Items { get; set;} = new List<OrderVM>();
+    public List<ProductVM> Products { get; set; } = new List<ProductVM>();
 }

@@ -31,7 +31,7 @@ public class TimetablesController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<TimetableVM>> EditTimetable([FromBody] TimetableUM timetableUM, int orderId)
     {
-        if (!await this.orderService.CheckIfOrderExistsById(orderId))
+        if (!this.orderService.CheckIfOrderExistsById(orderId))
             return NotFound();
 
         return await timetableService.EditTimetableAsync(orderId, timetableUM);

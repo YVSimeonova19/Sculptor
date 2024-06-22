@@ -75,13 +75,13 @@ internal class AuthenticationService : IAuthenticationService
         // Create deliverer role
         if (!await this.roleManager.RoleExistsAsync(UserRoles.Deliverer))
         {
-            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Retailer));
+            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Deliverer));
         }
 
         // Create admin role
         if (!await this.roleManager.RoleExistsAsync(UserRoles.Admin))
         {
-            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Retailer));
+            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
         }
 
         // Add role to the user

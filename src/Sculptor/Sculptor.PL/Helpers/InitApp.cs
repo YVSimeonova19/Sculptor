@@ -23,7 +23,7 @@ public static class InitApp
             new UserIM
             {
                 Username = "admin",
-                Password = "admin",
+                Password = "AdminP@55",
                 FirstName = "Dimitar",
                 LastName = "Yonchev",
                 Role = "Admin"
@@ -31,7 +31,7 @@ public static class InitApp
             new UserIM
             {
                 Username = "deliverer",
-                Password = "deliverer",
+                Password = "DelivererP@55",
                 FirstName = "Yordan",
                 LastName = "Kolev",
                 Role = "Deliverer"
@@ -39,7 +39,7 @@ public static class InitApp
             new UserIM
             {
                 Username = "retailer",
-                Password = "retailer",
+                Password = "RetailerP@55",
                 FirstName = "Ivana",
                 LastName = "Novkova",
                 Role = "Retailer"

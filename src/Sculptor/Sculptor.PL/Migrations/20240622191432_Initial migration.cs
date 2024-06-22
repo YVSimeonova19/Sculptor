@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sculptor.PL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,20 @@ namespace Sculptor.PL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    EAN = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,6 +192,7 @@ namespace Sculptor.PL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsDelivered = table.Column<bool>(type: "bit", nullable: false),
+                    PlacedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TimetableId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -216,22 +231,49 @@ namespace Sculptor.PL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "OrderProduct",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    EAN = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    OrdersId = table.Column<int>(type: "int", nullable: false),
+                    ProductsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrdersId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_Products_Orders_OrderId",
+                        name: "FK_OrderProduct_Orders_OrdersId",
+                        column: x => x.OrdersId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductsOrders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductsOrders", x => new { x.ProductId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_ProductsOrders_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductsOrders_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -269,6 +311,13 @@ namespace Sculptor.PL.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_UserName",
+                table: "AspNetUsers",
+                column: "UserName",
+                unique: true,
+                filter: "[UserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -282,13 +331,18 @@ namespace Sculptor.PL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderProduct_ProductsId",
+                table: "OrderProduct",
+                column: "ProductsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_TimetableId",
                 table: "Orders",
                 column: "TimetableId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_OrderId",
-                table: "Products",
+                name: "IX_ProductsOrders_OrderId",
+                table: "ProductsOrders",
                 column: "OrderId");
         }
 
@@ -314,7 +368,10 @@ namespace Sculptor.PL.Migrations
                 name: "ClientInfo");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "OrderProduct");
+
+            migrationBuilder.DropTable(
+                name: "ProductsOrders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -324,6 +381,9 @@ namespace Sculptor.PL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Timetables");

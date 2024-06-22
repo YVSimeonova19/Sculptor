@@ -17,9 +17,5 @@ public class Product
     [MaxLength(255)]
     public string EAN { get; set; } = string.Empty;
 
-    [Required]
-    public int OrderId { get; set; }
-
-    [Required]
-    public Order Order { get; set; } = null!;
+    public List<Order> Orders { get; set; }
 }
