@@ -13,5 +13,5 @@ public class Timetable
     public DateTime DeliveryDateTime { get; set; }
 
     [Required]
-    public ICollection<Order> Orders { get; } = new List<Order>();
+    public List<Order> Orders { get; } = new List<Order>();
 }
