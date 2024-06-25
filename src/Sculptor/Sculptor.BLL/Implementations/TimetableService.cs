@@ -51,7 +51,7 @@ internal class TimetableService : ITimetableService
     {
         var orders = await dbContext.Orders
             .Where(o => o.IsDelivered != true)
-            .OrderBy(o => o.ClientInfo.ClientArea)
+            .OrderBy(o => o.ClientInfo.Area)
             .ThenBy(o => o.PlacedAt)
             .Take(40)
             .ProjectTo<OrderVM>(mapper.ConfigurationProvider)

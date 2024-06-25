@@ -16,11 +16,11 @@ public class MappingProfile : Profile
         // Map order input model to order
         this.CreateMap<OrderIM, Order>()
             .ForMember(d => d.ClientInfo, cfg => cfg.MapFrom(s => new ClientInfo() { 
-                ClientFirstName = s.ClientFirstName,
-                ClientLastName = s.ClientLastName,
-                ClientEmail = s.ClientEmail,
-                ClientAddress = s.ClientAddress,
-                ClientArea = s.ClientArea
+                FirstName = s.ClientFirstName,
+                LastName = s.ClientLastName,
+                Email = s.ClientEmail,
+                Address = s.ClientAddress,
+                Area = s.ClientArea
             }));
 
         // Map order to the order view model

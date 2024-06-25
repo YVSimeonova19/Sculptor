@@ -10,23 +10,23 @@ public class ClientInfo
 
     [Required]
     [MaxLength(50)]
-    public string ClientFirstName { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(50)]
-    public string ClientLastName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(50)]
-    public string ClientEmail { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(50)]
-    public string ClientAddress { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(50)]
-    public string ClientArea { get; set; } = string.Empty;
+    public string Area { get; set; } = string.Empty;
 
     [Required]
     public int OrderId { get; set; }
