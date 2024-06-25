@@ -9,6 +9,7 @@ public interface ITimetableService
     // Return schedule information asyncronously
     Task<TimetableVM> ViewDailyTimetableAsync();
 
+    // TODO: Clarify idea
     // Add a new item to the schedule asyncronously
     Task AddNewItemAsync(Order order);
 

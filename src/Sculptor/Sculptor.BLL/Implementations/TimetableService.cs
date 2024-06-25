@@ -45,6 +45,7 @@ internal class TimetableService : ITimetableService
         return this.mapper.Map<TimetableVM>(timetable);
     }
 
+    // TODO: Update when done with the AddNewItemAsync method
     // Return schedule information asyncronously
     public async Task<TimetableVM> ViewDailyTimetableAsync()
     {
