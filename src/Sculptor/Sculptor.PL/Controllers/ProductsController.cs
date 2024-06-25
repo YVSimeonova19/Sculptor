@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sculptor.BLL.Contracts;
 using Sculptor.Common.Models.Product;
+using Sculptor.Common.Utilities;
 
 namespace Sculptor.PL.Controllers;
 
@@ -25,9 +26,14 @@ public class ProductsController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult> CreateProductAsync([FromBody] ProductIM productIM)
+    public async Task<ActionResult<Response>> CreateProductAsync([FromBody] ProductIM productIM)
     {
         await this.productService.CreateProductAsync(productIM);
-        return this.Ok();
+        return this.Ok(
+            new Response
+            {
+                Status = "Product created successfully",
+                Message = "This product has been created successfully!"
+            });
     }
 }

@@ -37,9 +37,16 @@ namespace Sculptor.PL.Controllers
         // Delete user by username asynchronously
 
         [HttpDelete("{username}")]
-        public async Task DeleteUser(string username)
+        public async Task<ActionResult<Response>> DeleteUser(string username)
         {
             await this.userService.DeleteUserAsync(username);
+
+            return this.Ok(
+                new Response
+                {
+                    Status = "User deleted successfully",
+                    Message = "This user has been deleted successfully!"
+                });
         }
     }
 }
