@@ -8,7 +8,6 @@ namespace Sculptor.PL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;
@@ -26,6 +25,7 @@ namespace Sculptor.PL.Controllers
         // Update user by username asynchronously
 
         [HttpPatch("{username}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserVM>> EditUser([FromBody] UserUM userUM, string username)
         {
             if (!await this.authenticationService.CheckIfUserExistsAsync(username))
@@ -37,6 +37,7 @@ namespace Sculptor.PL.Controllers
         // Delete user by username asynchronously
 
         [HttpDelete("{username}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Response>> DeleteUser(string username)
         {
             await this.userService.DeleteUserAsync(username);
