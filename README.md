@@ -46,15 +46,20 @@ The Sculptor project leverages a range of modern technologies to deliver a robus
 
 ## Documents 📄
 Comprehensive documentation and resources for the Sculptor project can be found below:
-- <a href="#">Documentation</a>
-- <a href="#">UML Diagrams</a>
-- <a href="#">Presentation</a>
+- [Documentation][DocumentationLink]
+- [Diagrams][LucidchartLink]
+- [Presentation][PresentationLink]
 
 ## Deployment ✈️
 The Sculptor project has been deployed on Azure, providing a live environment for testing and usage. You can access it [HERE][ProjectLink] 💻
 
-[ProjectLink]: #
 
 ```
 Thank you for scrolling this far! Show some ❤️ by starring the repo!
 ```
+
+
+[ProjectLink]: #
+[LucidchartLink]: https://lucid.app/folder/invitations/accept/inv_d40c8338-64e0-4ce7-9a7d-6d2e01c11b4d
+[DocumentationLink]: #
+[PresentationLink]: #
