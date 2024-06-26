@@ -47,13 +47,34 @@ public class OrdersController : ControllerBase
             });
     }
 
+    // Get the information of an order by its id asyncronously (Only available for admins)
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<OrderVM>> GetOrderInfo(int id)
+    {
+        if (!orderService.CheckIfOrderExistsById(id))
+            return NotFound(
+                new Response
+                {
+                    Status = "Order does not exist",
+                    Message = "An order with this id does not exist!"
+                });
+
+        return await this.orderService.GetOrderInfoByIdAsync(id);
+    }
+
     // Delete an order asyncronously (Only available for admins)
     [HttpDelete]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Response>> DeleteOrderAsync(int id)
     {
         if (!orderService.CheckIfOrderExistsById(id))
-            return NotFound();
+            return NotFound(
+                new Response
+                {
+                    Status = "Order does not exist",
+                    Message = "An order with this id does not exist!"
+                });
 
         // Delete the order
         await orderService.DeleteOrderAsync(id);
