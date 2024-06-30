@@ -63,6 +63,14 @@ public class OrdersController : ControllerBase
         return await this.orderService.GetOrderInfoByIdAsync(id);
     }
 
+    // Update the delivery status of an order asyncronously (Available for deliverers and admins)
+    [HttpPatch("{id}")]
+    [Authorize(Roles = "Deliverer,Admin")]
+    public async Task<ActionResult<OrderVM>> UpdateOrderStatus([FromBody] OrderUM orderUM, int id)
+    {
+        return await this.orderService.UpdateOrderAsync(id, orderUM);
+    }
+
     // Delete an order asyncronously (Only available for admins)
     [HttpDelete]
     [Authorize(Roles = "Admin")]
