@@ -64,5 +64,5 @@ Thank you for scrolling this far! Show some ❤️ by starring the repo!
 
 [ProjectLink]: https://sculptor-webapp-internship.azurewebsites.net/swagger/index.html
 [LucidchartLink]: https://lucid.app/folder/invitations/accept/inv_d40c8338-64e0-4ce7-9a7d-6d2e01c11b4d
-[DocumentationLink]: #
+[DocumentationLink]: https://codingburgas-my.sharepoint.com/:w:/g/personal/yvsimeonova19_codingburgas_bg/EWIf6lDmXxVDjilN1F9mUFoBHSO5KSZHEqZjFqBijSmG_Q?e=IEIsl6
 [PresentationLink]: #
