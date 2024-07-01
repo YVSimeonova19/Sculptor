@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sculptor.DAL.Data;
 
@@ -11,9 +12,11 @@ using Sculptor.DAL.Data;
 namespace Sculptor.PL.Migrations
 {
     [DbContext(typeof(SculptorDbContext))]
-    partial class SculptorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240701141444_Fix timetable")]
+    partial class Fixtimetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

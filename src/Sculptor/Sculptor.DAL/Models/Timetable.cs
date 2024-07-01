@@ -13,5 +13,9 @@ public class Timetable
     public DateTime DeliveryDateTime { get; set; }
 
     [Required]
-    public List<Order> Orders { get; } = new List<Order>();
+    [ForeignKey(nameof(OrderId))]
+    public Order Order { get; set; }
+
+    [Required]
+    public int OrderId { get; set; }
 }

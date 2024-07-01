@@ -4,7 +4,7 @@ namespace Sculptor.Common.Models.Timetable;
 
 public class TimetableVM
 {
-    public DateTime DateTime { get; set; }
+    public DateTime DeliveryDateTime { get; set; }
 
-    public OrderVM? Orders { get; set; }
+    public OrderVM? Order { get; set; }
 }

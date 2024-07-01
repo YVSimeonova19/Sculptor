@@ -6,6 +6,7 @@ using Sculptor.Common.Models.Order;
 using Sculptor.Common.Models.Timetable;
 using Sculptor.DAL.Data;
 using Sculptor.DAL.Models;
+using System;
 
 namespace Sculptor.BLL.Implementations;
 
@@ -21,42 +22,69 @@ internal class TimetableService : ITimetableService
         this.dbContext = dbContext;
     }
 
-    // Add a new item to the schedule asyncronously
-    public async Task AddNewItemAsync(Order order)
+    public async Task GenerateTimetableAsync()
     {
-        // TODO
-        throw new NotImplementedException();
-    }
+        await this.dbContext.Timetables
+            .Where(t => t.DeliveryDateTime > DateTime.Today.AddDays(1))
+            .ExecuteDeleteAsync();
 
-    // Update the schedule asyncronously
-    public async Task<TimetableVM> EditTimetableAsync(int orderId, TimetableUM timetableUM)
-    {
-        var timetable = await this.dbContext.Orders
-            .Where(o => o.Id == orderId)
-            .Select(o => o.Timetable)
-            .FirstAsync();
-
-        if (timetableUM.DeliveryDateTime != null)
-            timetable.DeliveryDateTime = (DateTime)timetableUM.DeliveryDateTime;
-
-        this.dbContext.Timetables.Update(timetable);
-        await this.dbContext.SaveChangesAsync();
-
-        return this.mapper.Map<TimetableVM>(timetable);
-    }
-
-    // TODO: Update when done with the AddNewItemAsync method
-    // Return schedule information asyncronously
-    public async Task<TimetableVM> ViewDailyTimetableAsync()
-    {
-        var orders = await dbContext.Orders
-            .Where(o => o.IsDelivered != true)
-            .OrderBy(o => o.ClientInfo.Area)
-            .ThenBy(o => o.PlacedAt)
-            .Take(40)
-            .ProjectTo<OrderVM>(mapper.ConfigurationProvider)
+        var orders = await this.dbContext.Orders
+            .Where(o => o.IsDelivered == false)
+            .OrderBy(o => o.PlacedAt)
+            .Include(o => o.ClientInfo)
             .ToListAsync();
 
-        return new TimetableVM { Orders = orders };
+        Dictionary<string, int> areaIndex = new Dictionary<string, int>();
+
+        for (int i = 0; i < orders.Count; i++)
+        {
+            if (!areaIndex.ContainsKey(orders[i].ClientInfo.Area))
+            {
+                areaIndex[orders[i].ClientInfo.Area] = i;
+            }
+        }
+
+        // Sort the orders based on the first occurrence index of their area
+        List<Order> sortedOrders = orders.OrderBy(o => areaIndex[o.ClientInfo.Area]).ToList();
+
+        TimeOnly prevDeliveryTime = new TimeOnly(8, 0);
+
+        for (int i = 0; i < sortedOrders.Count; i++)
+        {
+            var date = DateOnly.FromDateTime(DateTime.Now).AddDays((int)Math.Floor((double)i / 40) + 1);
+            TimeOnly time;
+
+            if (i == 0)
+            {
+                time = prevDeliveryTime;
+            }
+            else
+            {
+                if (sortedOrders[i].ClientInfo.Area == sortedOrders[i - 1].ClientInfo.Area)
+                {
+                    time = prevDeliveryTime.AddMinutes(10);
+                }
+                else
+                {
+                    time = new TimeOnly(prevDeliveryTime.Hour + 1, 0);
+                }
+            }
+
+            prevDeliveryTime = time;
+
+            var timetable = new Timetable() { DeliveryDateTime = date.ToDateTime(time), OrderId = sortedOrders[i].Id };
+
+            this.dbContext.Timetables.Add(timetable);
+        }
+
+        await this.dbContext.SaveChangesAsync();
+    }
+
+    public async Task<List<TimetableVM>> GetAllTimetablesAsync()
+    {
+        return await this.dbContext.Timetables
+            .Include(t => t.Order)
+            .ProjectTo<TimetableVM>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }

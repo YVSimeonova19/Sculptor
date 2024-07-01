@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Sculptor.BLL.Contracts;
 using Sculptor.Common.Models.Timetable;
 using Sculptor.Common.Utilities;
+using System.Runtime.InteropServices;
 
 namespace Sculptor.PL.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
 
 public class TimetablesController : ControllerBase
 {
@@ -21,7 +25,23 @@ public class TimetablesController : ControllerBase
     // Return schedue information asyncronously
     [HttpPost("/generate")]
     [Authorize(Roles = "Deliverer,Admin")]
-    public async Task<ActionResult<TimetableVM>> DisplaySchedule()
+    public async Task<IActionResult> DisplaySchedule()
     {
+        await this.timetableService.GenerateTimetableAsync();
+
+        return Ok();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<TimetableVM>>> GetAllTimetables()
+    {
+        var timetable = await this.timetableService.GetAllTimetablesAsync();
+
+        foreach (var entry in timetable)
+        {
+            entry.Order = await this.orderService.GetOrderInfoByIdAsync(entry.Order.Id);
+        }
+
+        return timetable;
     }
 }

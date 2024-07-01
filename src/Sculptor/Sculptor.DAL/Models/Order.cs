@@ -19,12 +19,6 @@ public class Order
     [Required]
     public List<Product> Products { get; set; }
 
-    [AllowNull]
-    public int? TimetableId { get; set; }
-
-    [AllowNull]
-    public Timetable? Timetable { get; set; } = null!;
-
     [Required]
     public ClientInfo ClientInfo { get; set; }
 }

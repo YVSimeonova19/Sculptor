@@ -6,13 +6,7 @@ namespace Sculptor.BLL.Contracts;
 
 public interface ITimetableService
 {
-    // Return schedule information asyncronously
-    Task<TimetableVM> ViewDailyTimetableAsync();
+    Task GenerateTimetableAsync();
 
-    // TODO: Clarify idea
-    // Add a new item to the schedule asyncronously
-    Task AddNewItemAsync(Order order);
-
-    // Update the schedule asyncronously
-    Task<TimetableVM> EditTimetableAsync(int orderId, TimetableUM timetableUM);
+    Task<List<TimetableVM>> GetAllTimetablesAsync();
 }

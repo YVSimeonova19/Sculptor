@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sculptor.Common.Models.Order;
 using Sculptor.Common.Models.Product;
+using Sculptor.Common.Models.Timetable;
 using Sculptor.Common.Models.User;
 using Sculptor.DAL.Models;
 
@@ -35,5 +36,8 @@ public class MappingProfile : Profile
 
         //
         this.CreateMap<ProductIM, Product>();
+
+        //
+        this.CreateMap<Timetable, TimetableVM>();
     }
 }

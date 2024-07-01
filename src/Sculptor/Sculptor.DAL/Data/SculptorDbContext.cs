@@ -21,14 +21,6 @@ public class SculptorDbContext : IdentityDbContext<User>
     // Set table relationships before being created
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Create relationship between Timetables and Orders
-        modelBuilder
-            .Entity<Timetable>()
-            .HasMany(e => e.Orders)
-            .WithOne(e => e.Timetable)
-            .HasForeignKey(e => e.TimetableId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         // Create relationship between Orders and UserInfo
         modelBuilder
             .Entity<Order>()

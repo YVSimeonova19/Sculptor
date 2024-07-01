@@ -4,7 +4,7 @@ namespace Sculptor.Common.Models.Order;
 
 public class OrderVM
 {
-    public string Id { get; set; } = string.Empty;
+    public int Id { get; set; }
 
     public string IsDelivered { get; set; } = string.Empty;
 
