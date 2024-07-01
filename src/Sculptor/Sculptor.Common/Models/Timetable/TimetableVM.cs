@@ -6,5 +6,5 @@ public class TimetableVM
 {
     public DateTime DateTime { get; set; }
 
-    public List<OrderVM>? Orders { get; set; }
+    public OrderVM? Orders { get; set; }
 }

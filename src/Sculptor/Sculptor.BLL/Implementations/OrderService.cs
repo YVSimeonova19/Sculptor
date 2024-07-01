@@ -6,6 +6,8 @@ using Sculptor.BLL.Contracts;
 using Sculptor.Common.Models.Order;
 using Sculptor.DAL.Data;
 using Sculptor.DAL.Models;
+using System.Runtime.InteropServices;
+using Sculptor.Common.Models.Product;
 
 namespace Sculptor.BLL.Implementations;
 
@@ -73,10 +75,29 @@ internal class OrderService : IOrderService
     // Get the information of an order by its id asyncronously
     public async Task<OrderVM> GetOrderInfoByIdAsync(int orderId)
     {
-        return await dbContext.Orders
+        var order = await dbContext.Orders
             .Where(o => o.Id == orderId)
             .ProjectTo<OrderVM>(this.mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
+
+        var clientInfo = await this.dbContext.ClientInfo
+            .FirstOrDefaultAsync(ci => ci.OrderId == orderId);
+
+        order.ClientFirstName = clientInfo.FirstName;
+        order.ClientLastName = clientInfo.LastName;
+        order.ClientEmail = clientInfo.Email;
+        order.ClientAddress = clientInfo.Address;
+        order.ClientArea = clientInfo.Area;
+
+        var products = await this.dbContext.ProductsOrders
+            .Where(po => po.OrderId == orderId)
+            .Select(po => po.Product)
+            .ProjectTo<ProductVM>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        order.Products = products;
+
+        return order;
     }
 
     public async Task<OrderVM> UpdateOrderAsync(int id, OrderUM orderUM)
@@ -93,6 +114,6 @@ internal class OrderService : IOrderService
             await this.dbContext.SaveChangesAsync();
         }
 
-        return this.mapper.Map<OrderVM>(order);
+        return await this.GetOrderInfoByIdAsync(id);
     }
 }

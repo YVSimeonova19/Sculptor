@@ -19,21 +19,9 @@ public class TimetablesController : ControllerBase
     }
 
     // Return schedue information asyncronously
-    [HttpGet("GetDailySchedule")]
+    [HttpPost("/generate")]
     [Authorize(Roles = "Deliverer,Admin")]
     public async Task<ActionResult<TimetableVM>> DisplaySchedule()
     {
-        return await timetableService.ViewDailyTimetableAsync();
-    }
-
-    // Edit order delivery datetime asyncronously
-    [HttpPatch("{orderId}")]
-    [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<TimetableVM>> EditTimetable([FromBody] TimetableUM timetableUM, int orderId)
-    {
-        if (!this.orderService.CheckIfOrderExistsById(orderId))
-            return NotFound();
-
-        return await timetableService.EditTimetableAsync(orderId, timetableUM);
     }
 }

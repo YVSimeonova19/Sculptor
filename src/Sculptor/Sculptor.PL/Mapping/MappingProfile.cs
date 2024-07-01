@@ -24,7 +24,11 @@ public class MappingProfile : Profile
             }));
 
         // Map order to the order view model
-        this.CreateMap<Order, OrderVM>();
+        this.CreateMap<Order, OrderVM>()
+            .ForMember(
+                dest => dest.Products,
+                cfg => cfg.MapFrom(s => s.Products)
+            );
 
         //
         this.CreateMap<Product, ProductVM>();
