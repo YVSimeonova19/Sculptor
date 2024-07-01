@@ -1,6 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/L9GXcoRU)
 
 # [Sculptor][ProjectLink] - the smart delivery service
+<a href="https://sculptor-webapp-internship.azurewebsites.net/swagger/index.html">
+    <img alt="preview" src="https://github.com/codingburgas/2324-pp-11v-1-YVSimeonova19/assets/63718749/b03998e0-e325-4603-ad5d-98627e091078">
+</a>
 
 ## Project Overview 📑
 **Sculptor** is a Web Application API designed for a **delivery scheduling system** that supports three distinct types of users: *Admin*, *Retailer*, and *Deliverer*. The system aims to streamline the delivery process, enhance efficiency, and reduce carbon footprint by optimizing delivery routes and schedules.
