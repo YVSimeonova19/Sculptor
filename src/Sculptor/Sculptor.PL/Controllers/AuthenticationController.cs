@@ -22,7 +22,7 @@ public class AuthController : ControllerBase
         this.tokenService = tokenService;
     }
 
-    // Create a user register asyncronously
+    // Create a user register
     [HttpPost("Register")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Response>> RegisterUserAsync([FromBody] UserIM userIM)
@@ -55,7 +55,7 @@ public class AuthController : ControllerBase
             });
     }
 
-    // Create a user login asyncronously
+    // Create a user login 
     [HttpPost("Login")]
     public async Task<ActionResult<LoginVM>> LoginUserAsync([FromBody] LoginIM loginIM)
     {

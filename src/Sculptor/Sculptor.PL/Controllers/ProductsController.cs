@@ -12,11 +12,13 @@ public class ProductsController : ControllerBase
 {
     private readonly IProductService productService;
 
+    // Add dependency injections
     public ProductsController(IProductService productService)
     {
         this.productService = productService;
     }
 
+    // Get a list of all products
     [HttpGet]
     [Authorize(Roles = "Admin,Retailer")]
     public async Task<ActionResult<List<ProductVM>>> GetAllProductsAsync()
@@ -24,6 +26,7 @@ public class ProductsController : ControllerBase
         return this.Ok(await productService.GetAllProductsAsync());
     }
 
+    // Create a new product
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Response>> CreateProductAsync([FromBody] ProductIM productIM)

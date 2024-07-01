@@ -1,5 +1,4 @@
-﻿using Sculptor.Common.Utilities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sculptor.Common.Models.User;
 

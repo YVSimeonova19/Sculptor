@@ -22,7 +22,7 @@ public class TimetablesController : ControllerBase
         this.orderService = orderService;
     }
 
-    // Return schedue information asyncronously
+    // Generate timetable
     [HttpPost("/generate")]
     [Authorize(Roles = "Deliverer,Admin")]
     public async Task<IActionResult> DisplaySchedule()
@@ -32,7 +32,9 @@ public class TimetablesController : ControllerBase
         return Ok();
     }
 
+    // Return schedule
     [HttpGet]
+    [Authorize(Roles = "Deliverer,Admin")]
     public async Task<ActionResult<List<TimetableVM>>> GetAllTimetables()
     {
         var timetable = await this.timetableService.GetAllTimetablesAsync();

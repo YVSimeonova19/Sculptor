@@ -20,7 +20,7 @@ public class OrdersController : ControllerBase
         this.productService = productService;
     }
 
-    // Place an order asyncronously (Only available for retailers and admins)
+    // Place an order (Only available for retailers and admins)
     [HttpPost]
     [Authorize(Roles = "Retailer,Admin")]
     public async Task<ActionResult<Response>> PlaceOrderAsync([FromBody] OrderIM orderIM)
@@ -47,7 +47,7 @@ public class OrdersController : ControllerBase
             });
     }
 
-    // Get the information of an order by its id asyncronously (Only available for admins)
+    // Get the information of an order by its id (Only available for admins)
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<OrderVM>> GetOrderInfo(int id)
@@ -63,7 +63,7 @@ public class OrdersController : ControllerBase
         return await this.orderService.GetOrderInfoByIdAsync(id);
     }
 
-    // Update the delivery status of an order asyncronously (Available for deliverers and admins)
+    // Update the delivery status of an order (Available for deliverers and admins)
     [HttpPatch("{id}")]
     [Authorize(Roles = "Deliverer,Admin")]
     public async Task<ActionResult<OrderVM>> UpdateOrderStatus([FromBody] OrderUM orderUM, int id)
@@ -71,7 +71,7 @@ public class OrdersController : ControllerBase
         return await this.orderService.UpdateOrderAsync(id, orderUM);
     }
 
-    // Delete an order asyncronously (Only available for admins)
+    // Delete an order (Only available for admins)
     [HttpDelete]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Response>> DeleteOrderAsync(int id)

@@ -19,6 +19,7 @@ internal class ProductService : IProductService
         this.mapper = mapper;
     }
 
+    // Add a product to the DB asyncronously
     public async Task CreateProductAsync(ProductIM productIM)
     {
         var product = this.mapper.Map<Product>(productIM);
@@ -28,11 +29,13 @@ internal class ProductService : IProductService
         await this.dbContext.SaveChangesAsync();
     }
 
+    // Get a list of all products asyncronously
     public async Task<List<ProductVM>> GetAllProductsAsync()
     {
         return await this.dbContext.Products.ProjectTo<ProductVM>(this.mapper.ConfigurationProvider).ToListAsync();
     }
 
+    // Get a product by its id asyncronously
     public async Task<ProductVM?> GetProductByIdAsync(int id)
     {
         return await dbContext.Products.Where(p => p.Id == id).ProjectTo<ProductVM>(this.mapper.ConfigurationProvider).FirstOrDefaultAsync();

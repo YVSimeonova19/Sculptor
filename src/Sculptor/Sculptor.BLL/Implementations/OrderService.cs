@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 using Sculptor.BLL.Contracts;
 using Sculptor.Common.Models.Order;
 using Sculptor.DAL.Data;
 using Sculptor.DAL.Models;
-using System.Runtime.InteropServices;
 using Sculptor.Common.Models.Product;
 
 namespace Sculptor.BLL.Implementations;
@@ -36,7 +34,9 @@ internal class OrderService : IOrderService
 
         await this.dbContext.SaveChangesAsync();
 
-        var orderId = this.dbContext.Orders.Where(o => o.PlacedAt == order.PlacedAt).First().Id;
+        var orderId = this.dbContext.Orders
+            .Where(o => o.PlacedAt == order.PlacedAt)
+            .First().Id;
 
         foreach(var productId in orderIM.ProductsIds)
         {
@@ -80,6 +80,7 @@ internal class OrderService : IOrderService
             .ProjectTo<OrderVM>(this.mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
 
+        // Get the clients information
         var clientInfo = await this.dbContext.ClientInfo
             .FirstOrDefaultAsync(ci => ci.OrderId == orderId);
 
@@ -89,6 +90,7 @@ internal class OrderService : IOrderService
         order.ClientAddress = clientInfo.Address;
         order.ClientArea = clientInfo.Area;
 
+        // Get the products in the order
         var products = await this.dbContext.ProductsOrders
             .Where(po => po.OrderId == orderId)
             .Select(po => po.Product)
@@ -100,6 +102,7 @@ internal class OrderService : IOrderService
         return order;
     }
 
+    // Update an orders information asyncronously
     public async Task<OrderVM> UpdateOrderAsync(int id, OrderUM orderUM)
     {
         // Get the order

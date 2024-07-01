@@ -31,13 +31,13 @@ public class MappingProfile : Profile
                 cfg => cfg.MapFrom(s => s.Products)
             );
 
-        //
+        // Map product to the product view model
         this.CreateMap<Product, ProductVM>();
 
-        //
+        // Map product input model to product
         this.CreateMap<ProductIM, Product>();
 
-        //
+        // Map timetable to the timetable view model
         this.CreateMap<Timetable, TimetableVM>();
     }
 }

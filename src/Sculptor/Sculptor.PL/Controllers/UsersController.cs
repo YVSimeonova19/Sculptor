@@ -23,18 +23,19 @@ namespace Sculptor.PL.Controllers
             this.currentUser = currentUser;
         }
 
-        // Retrieve a user from the DB by username asyncronously
+        // Retrieve a user from the DB by username
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserVM>> GetUserByUsernameAsync(string username)
         {
+            // Check if the user exists
             if (!await this.authenticationService.CheckIfUserExistsAsync(username))
                 return NotFound();
 
             return await this.userService.GetUserByUsernameAsync(username);
         }
 
-        // Get all users from the DB asynchronously
+        // Get all users from the DB
         [HttpGet("All")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<UserVM>>> GetAllUsersAsync()
@@ -42,18 +43,19 @@ namespace Sculptor.PL.Controllers
             return await this.userService.GetAllUsersAsync();
         }
 
-        // Update user by username asynchronously
+        // Update user by username
         [HttpPatch("{username}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserVM>> EditUser([FromBody] UserUM userUM, string username)
         {
+            // Check if the user exists
             if (!await this.authenticationService.CheckIfUserExistsAsync(username))
                 return NotFound();
 
             return await userService.UpdateUserAsync(username, userUM);
         }
 
-        // Delete user by username asynchronously
+        // Delete user by username
 
         [HttpDelete("{username}")]
         [Authorize(Roles = "Admin")]
