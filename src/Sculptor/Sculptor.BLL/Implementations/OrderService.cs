@@ -6,6 +6,9 @@ using Sculptor.Common.Models.Order;
 using Sculptor.DAL.Data;
 using Sculptor.DAL.Models;
 using Sculptor.Common.Models.Product;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleToAttribute("Sculptor.UnitTests")]
 
 namespace Sculptor.BLL.Implementations;
 
