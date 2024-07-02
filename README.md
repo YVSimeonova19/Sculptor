@@ -1,5 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/L9GXcoRU)
-
 # [Sculptor][ProjectLink] - the smart delivery service
 <a href="https://sculptor-webapp-internship.azurewebsites.net/swagger/index.html">
     <img alt="preview" src="https://github.com/codingburgas/2324-pp-11v-1-YVSimeonova19/assets/63718749/b03998e0-e325-4603-ad5d-98627e091078">
@@ -64,5 +62,5 @@ Thank you for scrolling this far! Show some ❤️ by starring the repo!
 
 [ProjectLink]: https://sculptor-webapp-internship.azurewebsites.net/swagger/index.html
 [LucidchartLink]: https://lucid.app/folder/invitations/accept/inv_d40c8338-64e0-4ce7-9a7d-6d2e01c11b4d
-[DocumentationLink]: https://codingburgas-my.sharepoint.com/:w:/g/personal/yvsimeonova19_codingburgas_bg/EWIf6lDmXxVDjilN1F9mUFoBHSO5KSZHEqZjFqBijSmG_Q?e=IEIsl6
-[PresentationLink]: #
+[DocumentationLink]: https://codingburgas-my.sharepoint.com/:w:/g/personal/yvsimeonova19_codingburgas_bg/EWIf6lDmXxVDjilN1F9mUFoBHSO5KSZHEqZjFqBijSmG_Q?e=FYfc33
+[PresentationLink]: https://codingburgas-my.sharepoint.com/:p:/g/personal/yvsimeonova19_codingburgas_bg/EQIcxzNfIBxIu2GtHXBK0rwBFw8XIoh5RtE1sEK2Z9Q2Hw?e=kNtkW3
